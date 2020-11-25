@@ -1,8 +1,9 @@
-# Node.js是什么
+# 1.Node.js是什么
 
 - Node.js不是语言、库、框架,而是JavaScript运行时的环境
 - 可以完全脱离浏览器来运行，来解析与执行JavaScript代码
 - Node.js中没有BOM,DOM，有ES标准(所以没有window、document)
+  - 有变量、方法、数据类型、内置对象、Array、Object、Date、Math
 - 提供服务器级别的操作API，如：文件读写、网络协议的构建、网络通信、http服务器
 - Node.js使用事件驱动、非阻塞IO模型，具有轻量高效特点
 
@@ -10,7 +11,7 @@
 
 
 
-# 读取文件
+# 2.读取文件
 
 node中的JavaScript具有文件操作的能力
 
@@ -39,7 +40,7 @@ node中的JavaScript具有文件操作的能力
    })
    ```
 
-# 写入文件
+# 3.写入文件
 
 ```javascript
 var fs = require('fs')
@@ -58,7 +59,7 @@ fs.writeFile('../data/write.md','test writein',function(error){
 
 
 
-# http
+# 4.http
 
 > node可以使用http模块创建和编写一个服务器
 >
@@ -100,3 +101,56 @@ server.listen(6324,function(){
 })
 ```
 
+# 5.Node中的JavaScript
+
+> Node中没有全局作用域的概念，是文件与文件之间的模块作用域，避免了变量污染的问题
+>
+> 1. 模块完全封闭
+> 2. 外部无法访问内部
+> 3. 内部无法访问外部
+>
+> 但是可以通过exports和require进行模块通信
+
+## 5.1核心模块
+
+文件操纵的`fs`核心模块，http服务构建的`http`模块，`path`路径操作模块，`os`操作系统信息模块
+
+```javascript
+//加载模块
+var fs = require('fs')
+//使用模块中的方法
+fs.xxx()
+```
+
+## 5.2自定义模块
+
+require
+
+exports
+
+## 5.3第三方模块
+
+# 6.Web服务器开发
+
+## 6.1 ip地址和端口号
+
+- ip地址用来定位计算机
+
+- 端口号用来定位具体的应用程序
+- 一切需要联网通信的软件都会占用一个端口号
+- 端口号的范围从0~65536之间
+- 在计算机中有一些默认端口号，最好不要去使用
+  - 列入http服务的80
+
+## 6.2 Content-Type
+
+- 服务器需要将每次响应的数据是什么内容类型告知客户端
+- https://tool.oschina.net/commons 内容类型对应数据   参考
+- 对于文本类型，加上编码charset=utf-8，防止乱码
+
+# 客户端渲染和服务端渲染
+
+- 客户端渲染不利于SEO搜索引擎优化
+- 服务端渲染是可以被爬虫抓取到的，客户端异步渲染是很难被爬虫抓取到的
+- 所以大多数网站是客户端和服务端渲染结合的
+- 所以服务端是为了SEO搜索引擎优化
