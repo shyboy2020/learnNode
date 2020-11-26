@@ -25,7 +25,7 @@
 
       不要再想文件路径了，把所有的路径都想象成 url 地址
     -->
-  <link rel="stylesheet" href="/public/lib/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/public/lib/dist/css/bootstrap.css">
 </head>
 
 <body>
@@ -38,7 +38,9 @@
   <div class="comments container">
     <ul class="list-group">
       {{each comments}}
-      <li class="list-group-item">{{ $value.name }}说：{{ $value.message }} <span class="pull-right">{{ $value.dateTime }}</span></li>
+      <li class="list-group-item">{{$value.name}} 说: {{$value.message}}
+        <span class="pull-light">{{$value.dateTime}}</span>
+      </li>
       {{/each}}
     </ul>
   </div>
