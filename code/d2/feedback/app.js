@@ -8,17 +8,17 @@ var comments = [
 	{
 		name:'wh',
 		message:'傻逼',
-		dataTime:'2020-20-20'
+		detaTime:'2020-20-20'
 	},
 	{
 		name:'wh1',
 		message:'楼上+1',
-		dataTime:'2020-20-20'
+		detaTime:'2020-20-20'
 	},
 	{
 		name:'wh2',
 		message:'楼上+2',
-		dataTime:'2020-20-20'
+		detaTime:'2020-20-20'
 	}
 ]
 
