@@ -1,37 +1,28 @@
 var express = require('express')
-var fs = require('fs')
+var bodyParser = require('body-parser')
+
+
+var router = require('./router/router.js')
+
 
 var app = express()
 
 //开放node_modules和public目录
 app.use('/node_modules/',express.static('./node_modules/'))
 app.use('/public/',express.static('./public/'))
-
+//配置模板引擎
 app.engine('html', require('express-art-template'));
+//配置body-parser中间件
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+//配置操作需要写在搭载路由容器之前
+//得到路由容器
+app.use(router)
 
 
-var infos = ['学生','老师','家长']
-
-
-app.get('/',function(req,res){
-	//readFile第二个参数可选，表示用utf-8编码方式去读取
-	//还可以用data.toString()方式
-	fs.readFile('./db.json','utf-8',function(err,data){
-		if (err) {
-			return res.status(500).send('Server err')
-		}
-		//文件中读取的数据是字符串
-		//所以需要转换成对象形式
-		var student = JSON.parse(data).students
-
-		res.render('index.html',{
-		infos: infos,
-		students: student,
-		})
-	})
-	
-})
-
+//绑定端口号，启动服务
 app.listen(6324,function(){
 	console.log('app is running...')
 })
+
