@@ -109,6 +109,12 @@ module.exports = {
 
 node package manager
 
+- `npm init -y`初始化项目,会生成package.json文件
+- package.json文件中最重要的是`dependencies`,保存着是第三方包的依赖信息
+- 所以一般在网上下载别人的项目,一般通过`npm install`下载依赖项中所需的包
+- 建议执行`npm install 包名`的时候加上`--save`，可以用来保存依赖项,便于运行
+- `package.lock.json`保存着依赖的所有的包的信息;锁定版本号，防止自动升级版本
+
 ### 2.6 package.json
 
 每个项目都需要有一个`package.json`文件

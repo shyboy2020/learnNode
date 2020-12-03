@@ -97,7 +97,7 @@ req.query
 安装
 
 ```javascript
-npm install body-parser
+npm install -S body-parser 
 ```
 
 配置
@@ -125,3 +125,23 @@ app.use(function (req, res) {
 })
 ```
 
+## 6.路由设计
+
+| 请求方法 | 请求路径         | get参数 | post参数                   | 备注             |
+| -------- | ---------------- | ------- | -------------------------- | ---------------- |
+| GET      | /students        |         |                            | 渲染首页         |
+| GET      | /students/new    |         |                            | 渲染添加学生数据 |
+| POST     | /students/new    |         | name,age,gender,hobbies    | 处理添加学生数据 |
+| GET      | /students/edit   | id      |                            | 渲染编辑页面     |
+| POST     | /students/edit   |         | id,name,age,gender,hobbies | 处理编辑请求     |
+| GET      | /students/delete | id      |                            | 处理删除请求     |
+
+## 	*app.js作为入口文件的一些职责
+
+- 创建服务
+- 配置相关服务
+  - 模板引擎
+  - body-parser解析表单post请求体
+  - 提供静态资源服务(开放某些目录)
+- 挂载路由
+- 监听端口启动服务

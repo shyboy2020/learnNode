@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function get(url,callback) {
+        //1.创建对象
+        var xhr = new XMLHttpRequest()
+        //2.当请求加载成功之后要调用指定的函数
+        xhr.onload = function(){
+            callback(xhr.responseText)
+        }
+        xhr.open('GET',url)
+        xhr.send()
+    }
+
+    get('data.json',function(data){
+        console.log(data)
+    })
+
+</script>
+</body>
+</html>
