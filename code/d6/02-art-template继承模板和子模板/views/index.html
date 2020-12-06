@@ -1,0 +1,9 @@
+<!--继承layout的模板-->
+{{ extend './layout.html' }}
+
+<!--填充插槽-->
+{{ block 'content' }}
+    <div>
+        <h1>主页内容</h1>
+    </div>
+{{ /block }}

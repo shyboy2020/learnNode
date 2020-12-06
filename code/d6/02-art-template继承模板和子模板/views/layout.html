@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+<!--    可填充样式，默认无-->
+    {{ block 'head' }}{{ /block }}
+</head>
+<body>
+<!--    子模板作为头部-->
+    {{ include './header.html' }}
+
+    {{ block 'content' }}
+        <h1>默认内容</h1>
+    {{ /block }}
+
+<!--    子模板作为尾部-->
+    {{ include './footer.html' }}
+
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+<!--    可填充具体脚本，默认无-->
+    {{ block 'script' }}{{ /block }}
+</body>
+</html>
