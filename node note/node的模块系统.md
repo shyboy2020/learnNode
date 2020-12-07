@@ -121,4 +121,51 @@ node package manager
 
 通过`npm init`自动初始化
 
+### 2.7 path文件路径操作模块
 
+```javascript
+path.basename('c:/a/b/c/index.js')
+//'index.js'
+
+path.basename('c:/a/b/c/index.js','.js')
+//'index'
+
+path.dirname('c:/a/b/c/index.js')
+//'c:/a/b/c'
+
+path.extname('c:/a/b/c/index.js')
+//'.js'
+
+path.parse('c:/a/b/c/index.js')
+//{
+//  root: 'c:/',
+//  dir: 'c:/a/b/c',
+//  base: 'index.js',
+//  ext: '.js',
+//  name: 'index'
+//}
+
+path.join('c:/a','b')
+//'c:\\a\\b'
+```
+
+### 2.8 Node中的其他成员
+
+在每个模块中,除了`require`,`exports`,
+
+- `__dirname`可以用来**动态获取**当前文件模块所属目录的绝对路径
+- `__filename`可以用来**动态获取**当前文件的绝对路径
+
+
+
+**文件操作路径中，相对路径设计的就是相对于执行 node 命令所处的路径**，所以在文件操作中使用相对路径是不可靠的，而要用`__dirname`、`__filename`绝对路径代替相对路径
+
+常使用
+
+```javascript
+path.join(__dirname,'./xxx.js')
+```
+
+
+
+**模块加载中的路径**表示则不受执行 node 命令所处路径的影响，使用相对路径即可

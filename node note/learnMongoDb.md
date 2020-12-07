@@ -68,7 +68,7 @@ exit
 npm i mongoose
 ```
 
-实例
+官方实例
 
 ```javascript
 const mongoose = require('mongoose');
@@ -84,4 +84,164 @@ const kitty = new Cat({ name: 'Zildjian' });
 //持久化保存kitty实例
 kitty.save().then(() => console.log('meow'));
 ```
+
+#### MongoDB数据库的基本概念
+
+- 可以有多个数据库
+- 一个数据库中可以有多个集合
+- 一个集合中可以有多个文档
+- 文档结构很灵活
+
+```javascript
+{
+    goods:{
+        users:[
+            {name:'张三',age:14}
+            {name:'张三1',age:13}
+    		{name:'张三2',age:16}
+    		...
+        ]，
+        stores:[
+            
+        ],
+        ...
+    },
+    files:{
+        
+    },
+    ...
+}
+```
+
+#### moogoose具体使用
+
+##### 设计schema发布model
+
+```javascript
+//引入
+const mongoose = require('mongoose')
+//定义一个schema
+const Schema = mongoose.Schema
+
+//1.连接数据库
+//指定连接的数据库不需要存在,当你插入数据的时候就会自动创建出来
+mongoose.connect('mongodb://localhost/itcast')
+
+//2.设计集合结构(表结构)
+//字段名称就是表结构中的属性名称
+const userSchema = new Schema({
+    username: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    }
+})
+
+//3.将文档结构发布为模型
+//mongoose.model方法:将一个结构发布为model
+//第一个参数:传入一个大写名词单数字符串来表示你的数据库名称
+//          *大写名词单数字符串会自动转化为小写名词复数字符串
+//第二个参数:结构schema名称
+//返回值:模型构造函数
+var User = mongoose.model('User',userSchema)
+//最后 module.exports = mongoose.model('User',userSchema)
+```
+
+##### 添加数据并保存
+
+```javascript
+//4.处理模型构造函数
+const admin = new User({
+    username:'admin',
+    password:'123456',
+    email:'13819571931@sina.cn'
+})
+
+//5.保存数据数据持久化
+admin.save().then(() => {
+    console.log('保存成功')
+})
+```
+
+##### 查询数据
+
+查询所有
+
+```javascript
+User.find().then((data) => {
+    console.log(data)
+})
+```
+
+按条件查询所有
+
+```javascript
+User.find({password:'123456'}).then((data) => {
+    console.log(data)
+})
+```
+
+按条件查询单个
+
+```javascript
+User.findOne({password:'123456'}).then((data) => {
+    console.log(data)
+})
+```
+
+##### 删除数据
+
+删除单个
+
+```javascript
+User.deleteOne({username:'wh'}).then(() => {
+    console.log('删除成功')
+})
+```
+
+删除多个
+
+```javascript
+User.deleteMany({username:'wh2'}).then(() => {
+    console.log('删除成功')
+})
+```
+
+根据id删除
+
+```javascript
+User.findByIdAndRemove/Delete(id).then(() => {
+    console.log('删除成功')
+}).catch(() => {
+    console.log('删除失败')
+})
+```
+
+
+
+##### 更新数据
+
+按id更新一个数据
+
+```javascript
+User.findByIdAndUpdate('5fcb2a4ca6ec9813341c7650',{password:'itspassword'}).then((data)=>{
+    console.log(data)
+    console.log('更新成功')
+}).catch(()=>{
+    console.log('更新失败')
+})
+```
+
+
+
+##### **具体方法参考官方文档
+
+> http://www.mongoosejs.net/docs/api.html#Model
 

@@ -14,32 +14,15 @@ var express = require('express')
 var router = express.Router()
 //2.把路由挂载到router容器中
 	router.get('/students',function(req,res){
-	//readFile第二个参数可选，表示用utf-8编码方式去读取
-	//还可以用data.toString()方式
-		// fs.readFile('./data/db.json','utf-8',function(err,data){
-		// 	if (err) {
-		// 		return res.status(500).send('Server err')
-		// 	}
-		// 	//文件中读取的数据是字符串
-		// 	//所以需要转换成对象形式
-		// 	var students = JSON.parse(data).students
-	
-		// 	res.render('index.html',{
-		// 	infos: ['学生','老师','家长'],
-		// 	students: students,
-		// 	})
-		// })
-	
-		Student.find(function(err,studentsList){
-			if (err) { 
-				return res.status(500).send('Server err')
-			}
+		Student.find().then((studentsList) => {
+			// console.log(studentsList)
 			res.render('index.html',{
 				infos: ['学生','老师','家长'],
 				studentsInfo: studentsList
 			})
-			// console.log(err)
-			// console.log(students)
+		}).catch((err) => {
+			console.log(err)
+			res.status(500).send('Server err')
 		})
 	}),
 
@@ -57,11 +40,10 @@ var router = express.Router()
 		//	先读取.json文件转成对象;向对象中push数据;把对象转成字符串，写入.json文件中
 		//3.发送响应
 		// console.log(req.body)
-		Student.save(req.body,function(err){
-			if (err) { 
-				return res.status(500).send('Server err')
-			}
+		new Student(req.body).save().then(() => {
 			res.redirect('/students')
+		}).catch(() => {
+			res.status(500).send('Server err')
 		})
 	}),
 
@@ -73,13 +55,20 @@ var router = express.Router()
 		//3.渲染编辑页面
 		//	根据id把学生信息查出来
 		//	使用模板引擎渲染页面
-		Student.findById(parseInt(req.query.id),function(err,student){
-			if (err) { 
-				return res.status(500).send('Server err')
-			}
+		// Student.findById(parseInt(req.query.id),function(err,student){
+		// 	if (err) {
+		// 		return res.status(500).send('Server err')
+		// 	}
+		// 	res.render('edit.html',{
+		// 		studentsInfo: student
+		// 	})
+		// })
+		Student.findById(req.query.id).then((student) => {
 			res.render('edit.html',{
 				studentsInfo: student
 			})
+		}).catch(() => {
+			res.status(500).send('Server err')
 		})
 	}),
 
@@ -91,11 +80,10 @@ var router = express.Router()
 		//2.更新
 		//	Student.updateById()
 		//3.发送响应
-		Student.updateById(req.body,function(err,student){
-			if (err) {
-				return res.status(500).send('Server err')
-			}
+		Student.findByIdAndUpdate(req.body.id,req.body).then(() => {
 			res.redirect('/students')
+		}).catch(() => {
+			res.status(500).send('Server err')
 		})
 	}),
 
@@ -105,11 +93,17 @@ var router = express.Router()
 		//1.获取要删除的id
 		//2.根据id执行删除操作
 		//3.发送响应
-		Student.deleteById(req.query.id,function(err,student){
-			if (err) {
-				return res.status(500).send('Server err')
-			}
+		// Student.deleteById(req.query.id,function(err,student){
+		// 	if (err) {
+		// 		return res.status(500).send('Server err')
+		// 	}
+		// 	res.redirect('/students')
+		// })
+
+		Student.findByIdAndDelete(req.query.id).then(() => {
 			res.redirect('/students')
+		}).catch(() => {
+			res.status(500).send('Server err')
 		})
 	})
 //导出router容器，在app.js中导入router容器
